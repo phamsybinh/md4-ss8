@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <header th:fragment="header(employee,a)">
+        <nav>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="/products/list">Products</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+        </nav>
+        <p th:text="${employee.name}"></p>
+    </header>
+</body>
+</html>

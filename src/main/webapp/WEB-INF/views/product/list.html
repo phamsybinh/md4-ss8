@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Danh sách sản phẩm</h1>
+<a href="/products/save">Thêm mới</a>
+<table border="10" cellpadding="10" cellspacing="10">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Type</th>
+        <th colspan="2">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pro,loop :${products}">
+        <td th:text="${pro.id}"></td>
+        <td th:text="${pro.name}"> </td>
+        <td th:text="${#numbers.formatDecimal(pro.price, 0, 'COMMA', 2, 'POINT')}"></td>
+        <td th:text="${pro.stock}"></td>
+        <td th:text="${pro.productType.getName()}"></td>
+        <td><a th:href="|/products/edit/${pro.getId()}|" onclick="return confirm('Bạn có cắc chắn muốn cập nhật không?')">Edit</a></td>
+        <td><a th:href="|/products/delete?id=${pro.id}|" onclick="return confirm('Bạn có cắc chắn muốn xóa không?')">Delete</a></td>
+    </tr>
+
+    </tbody>
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li th:if="${currentPage > 0}">
+            <a th:href="@{/products/list(page=${currentPage - 1})}">Previous</a>
+        </li>
+        <li th:class="${pageNumber == currentPage ? 'active' : ''}" th:each="pageNumber :${totalPage}"  class="page-item">
+            <a th:text="${pageNumber}" class="page-link" th:href="@{/products/list(page=${pageNumber}-1)}"></a>
+        </li>
+        <li th:if="${currentPage < countTotalPage - 1}">
+            <a th:href="@{/products/list(page=${currentPage + 1})}">Next</a>
+        </li>
+
+    </ul>
+</nav>
+</body>
+</html>
